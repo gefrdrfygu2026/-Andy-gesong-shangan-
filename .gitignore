@@ -1,0 +1,100 @@
+# ===== 敏感信息与密钥（必须排除） =====
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+config/secret.*
+api_key*
+token*
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+.python-version
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ===== Node / 前端（即使当前不用也先排除） =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+build/
+.next/
+out/
+
+# ===== Java / JVM =====
+*.class
+*.jar
+*.war
+*.ear
+target/
+.gradle/
+build/
+
+# ===== IDE 与编辑器 =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ===== 日志与临时 =====
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+
+# ===== 大数据 / 数据文件（避免误提交大文件） =====
+*.csv
+*.tsv
+*.parquet
+*.arrow
+*.feather
+data/raw/
+data/intermediate/
+*.h5
+*.hdf5
+
+# ===== 模型权重（绝对不能 push） =====
+*.pt
+*.pth
+*.onnx
+*.safetensors
+*.bin
+*.gguf
+models/
+checkpoints/
+
+# ===== 操作系统 =====
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# ===== 作业 / 学习过程临时文件 =====
+*.bak
+*.orig
+*.rej
+*~
+scratch/
+notes-private/

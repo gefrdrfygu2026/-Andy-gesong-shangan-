@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent 核心要点 · 1 分钟速成</title>
+<style>
+  :root{--primary:#4f46e5;--primary-dark:#3730a3;--primary-light:#eef2ff;--accent:#0891b2;--accent-light:#ecfeff;--text:#1f2937;--text-light:#6b7280;--bg:#fff;--bg-soft:#f9fafb;--border:#e5e7eb}
+  *{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg-soft);line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+  .container{max-width:780px;margin:0 auto;padding:40px 24px 80px}
+  header{text-align:center;margin-bottom:32px}.badge{display:inline-block;background:var(--primary-light);color:var(--primary);font-size:12px;font-weight:600;padding:4px 12px;border-radius:999px;margin-bottom:14px;letter-spacing:.3px}
+  h1{font-size:28px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px}.subtitle{color:var(--text-light);font-size:14.5px}
+  .definition{background:linear-gradient(135deg,var(--primary) 0%,#6366f1 100%);color:#fff;padding:20px 24px;border-radius:12px;margin-bottom:36px;font-size:16px;line-height:1.7;box-shadow:0 4px 14px rgba(79,70,229,.2)}
+  .definition strong{font-weight:600}
+  .section-title{font-size:18px;font-weight:600;margin:36px 0 16px;display:flex;align-items:center;gap:10px}.section-title::before{content:"";width:4px;height:18px;background:var(--primary);border-radius:2px}
+  .points{display:grid;gap:12px}.point{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px 20px}
+  .point-title{font-size:15.5px;font-weight:600;margin-bottom:6px}.point-body{color:var(--text-light);font-size:14px;line-height:1.7}.point-body strong{color:var(--text);font-weight:600}
+  .scenario{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px 22px;font-size:14.5px;line-height:1.75}.scenario strong{color:var(--primary-dark)}
+  .scenario ol{margin:8px 0 0 22px;color:var(--text-light)}.scenario ol li{margin-bottom:4px}
+  .boundary{background:var(--bg);border-left:3px solid #f59e0b;padding:12px 16px;border-radius:6px;margin-bottom:10px;font-size:14px;color:var(--text)}.boundary strong{color:#b45309}
+  .sources{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px 22px;font-size:14px}.sources ol{margin-left:22px;color:var(--text-light)}.sources ol li{margin-bottom:8px;word-break:break-all}.sources a{color:var(--primary);text-decoration:none}.sources a:hover{text-decoration:underline}
+  .quiz{margin-top:8px}.question{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px}.q-text{font-weight:600;font-size:14.5px;margin-bottom:6px}.q-text::before{content:"Q";color:var(--primary);font-weight:700;margin-right:6px}
+  summary{cursor:pointer;color:var(--primary);font-size:13.5px;font-weight:500;display:inline-block;padding:3px 0}summary:hover{text-decoration:underline}summary::-webkit-details-marker{display:none}summary::before{content:"▸ ";font-size:11px}details[open] summary::before{content:"▾ "}
+  .answer{margin-top:8px;padding:10px 14px;background:var(--accent-light);border-left:3px solid var(--accent);border-radius:4px;color:#155e75;font-size:13.5px;line-height:1.7}.answer strong{color:#0e7490;font-weight:600}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--border);text-align:center;color:var(--text-light);font-size:12.5px}
+  @media(max-width:600px){h1{font-size:22px}.container{padding:24px 16px 60px}.point,.scenario,.sources,.question{padding:14px 16px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="badge">1 分钟学完 · 由 concept-learning-generator 生成</div>
+    <h1>Agent 核心要点</h1>
+    <p class="subtitle">理解"会做事的大模型应用"：感知 → 思考 → 行动 → 观察 → 循环</p>
+  </header>
+
+  <div class="definition">
+    <strong>一句话定义：</strong>Agent 是一个能<strong>感知环境 → 推理规划 → 调用工具行动 → 观察结果 → 循环迭代</strong>的大模型应用。它<strong>不是</strong>一个只会聊天的 chatbot（chatbot 只回答不行动），也<strong>不是</strong>通用人工智能 AGI（Agent 是一种<strong>架构模式</strong>，不等同于"超级智能"）。
+  </div>
+
+  <h2 class="section-title">核心机制（6 个组件）</h2>
+  <div class="points">
+    <div class="point"><div class="point-title">1. 感知 (Perceive)</div><div class="point-body">接收<strong>用户输入</strong>和<strong>环境反馈</strong>（工具返回结果、错误信息）。这是 Agent 与世界交互的入口。</div></div>
+    <div class="point"><div class="point-title">2. 推理 / 规划 (Reason / Plan)</div><div class="point-body">用 LLM 把大目标<strong>拆成子任务</strong>，决定下一步做什么（搜什么、调哪个工具、读哪段文档）。这一步是 Agent 的"大脑"。</div></div>
+    <div class="point"><div class="point-title">3. 行动 (Act)</div><div class="point-body"><strong>调用工具</strong>执行具体动作：网页搜索、读写文件、跑代码、查数据库、调 API。工具能力决定 Agent 的"手脚"边界。</div></div>
+    <div class="point"><div class="point-title">4. 观察 (Observe)</div><div class="point-body">拿到工具返回的<strong>结果或错误</strong>，纳入下一轮推理。观察能力决定 Agent 能否从错误中恢复。</div></div>
+    <div class="point"><div class="point-title">5. 循环 / 迭代 (Loop)</div><div class="point-body">把"观察 → 推理 → 行动"循环起来，<strong>直到目标完成</strong>或达到终止条件（最大步数、置信度阈值）。</div></div>
+    <div class="point"><div class="point-title">6. 记忆 (Memory)</div><div class="point-body"><strong>短期</strong>靠上下文窗口，<strong>长期</strong>靠外部存储（向量数据库、文件系统）。没有记忆的 Agent 每次都从零开始。</div></div>
+  </div>
+
+  <h2 class="section-title">一个具体应用场景</h2>
+  <div class="scenario">
+    <strong>场景：研究助手 Agent —— 调研"RAG 技术的最新进展"</strong><br>
+    用户对 Agent 说："帮我调研 2024–2025 年 RAG 技术的主要进展，并写一份对比报告。"
+    <ol>
+      <li>Agent 拆解：搜最新综述 → 读代表性论文 → 提取关键方法 → 对比优缺点 → 写报告</li>
+      <li>调用工具：<code>web_search</code>（搜 arXiv 综述）→ <code>pdf_reader</code>（读论文）→ <code>code_interpreter</code>（画对比表）</li>
+      <li>每一步用 LLM 推理决定下一步该读哪篇/搜什么</li>
+      <li>观察到论文质量参差时，Agent 会换关键词重搜，而不是硬读</li>
+      <li>最终输出结构化对比报告，附引用</li>
+    </ol>
+  </div>
+
+  <h2 class="section-title">容易混淆的问题与边界</h2>
+  <div class="boundary"><strong>坑 1：把 Agent 当万能。</strong>简单问题（"把这段话翻译成英文"）用 Agent 反而更慢更贵。Agent 适合<strong>多步、需要外部信息、可验证</strong>的任务。</div>
+  <div class="boundary"><strong>坑 2：忽视循环终止条件。</strong>Agent 可能死循环、跑偏或无限调工具。必须明确<strong>"什么时候算完成"</strong>（最大步数、置信度、超时）。</div>
+  <div class="boundary"><strong>坑 3：把 Agent 等同 AGI。</strong>Agent 是<strong>一种架构模式</strong>（LLM + 工具 + 循环），不等于"超级智能"。它<strong>没有自主意识</strong>，目标仍由人给定。</div>
+  <div class="boundary"><strong>边界：</strong>当前主流 Agent 在"<strong>明确目标 + 工具齐全 + 可验证</strong>"的任务上表现好；开放式创意、价值判断、长程规划仍弱。</div>
+
+  <h2 class="section-title">可核查的资料来源</h2>
+  <div class="sources">
+    <ol>
+      <li>ReAct: Synergizing Reasoning and Acting in Language Models（Yao et al., 2022）— <a href="https://arxiv.org/abs/2210.03629" target="_blank">https://arxiv.org/abs/2210.03629</a></li>
+      <li>OpenAI Function Calling Guide — <a href="https://platform.openai.com/docs/guides/function-calling" target="_blank">https://platform.openai.com/docs/guides/function-calling</a></li>
+      <li>Anthropic Tool Use Overview — <a href="https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview" target="_blank">https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview</a></li>
+      <li>Toolformer: Language Models Can Teach Themselves to Use Tools（Schick et al., 2023）— <a href="https://arxiv.org/abs/2302.04761" target="_blank">https://arxiv.org/abs/2302.04761</a></li>
+    </ol>
+  </div>
+
+  <h2 class="section-title">自测题（5 道）</h2>
+  <div class="quiz">
+    <div class="question"><div class="q-text">1. Agent 和普通 chatbot 最本质的区别是什么？</div>
+      <details><summary>看答案</summary><div class="answer">Chatbot 只<strong>被动回答</strong>（输出文字）；Agent 能<strong>主动调用工具、采取行动、观察结果并迭代</strong>。本质区别在于"是否改变外部环境"。</div></details></div>
+    <div class="question"><div class="q-text">2. Agent 的核心循环是哪几步？</div>
+      <details><summary>看答案</summary><div class="answer"><strong>感知 → 推理/规划 → 行动（调工具）→ 观察 → 循环</strong>，直到目标完成或达到终止条件。</div></details></div>
+    <div class="question"><div class="q-text">3. 什么时候<strong>不该</strong>用 Agent？</div>
+      <details><summary>看答案</summary><div class="answer">任务<strong>单步、确定、不需要外部信息</strong>时（翻译、改写、简单问答），用 Agent 反而<strong>更慢更贵、可能出错</strong>。Agent 的价值来自多步+工具+迭代。</div></details></div>
+    <div class="question"><div class="q-text">4. ReAct 论文里 "Re" 和 "Act" 分别指什么？</div>
+      <details><summary>看答案</summary><div class="answer"><strong>Re = Reasoning（推理/思考下一步）</strong>；<strong>Act = Acting（调工具执行动作）</strong>。ReAct 把两者交替进行，让 LLM 在推理中决定何时调工具。</div></details></div>
+    <div class="question"><div class="q-text">5. 给出 Agent 失败的一个常见原因（设计层面）。</div>
+      <details><summary>看答案</summary><div class="answer">常见原因：<strong>没有明确的终止条件</strong>导致死循环；<strong>工具描述不清楚</strong>导致 Agent 选错工具；<strong>目标太模糊</strong>导致 Agent 跑偏；<strong>上下文窗口溢出</strong>导致后期推理混乱。</div></details></div>
+  </div>
+
+  <footer>由 concept-learning-generator 生成 · 资料来源已在生成时人工核查可访问 · 内容已用第一人称视角重述</footer>
+</div>
+</body>
+</html>

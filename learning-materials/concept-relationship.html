@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三概念关系图：Agent × 上下文 × Skill</title>
+<style>
+  :root{--primary:#4f46e5;--primary-light:#eef2ff;--accent:#0891b2;--accent-light:#ecfeff;--text:#1f2937;--text-light:#6b7280;--bg:#fff;--bg-soft:#f9fafb;--border:#e5e7eb;--green:#0f6e56;--green-light:#e1f5ee;--purple:#534ab7;--purple-light:#eeedfe}
+  *{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg-soft);line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+  .container{max-width:820px;margin:0 auto;padding:40px 24px 80px}
+  header{text-align:center;margin-bottom:28px}.badge{display:inline-block;background:var(--primary-light);color:var(--primary);font-size:12px;font-weight:600;padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:26px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px}.subtitle{color:var(--text-light);font-size:14.5px}
+  .section-title{font-size:18px;font-weight:600;margin:32px 0 14px;display:flex;align-items:center;gap:10px}.section-title::before{content:"";width:4px;height:18px;background:var(--primary);border-radius:2px}
+  .diagram-wrap{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:20px 0}
+  .diagram-wrap svg{width:100%;height:auto;display:block}
+  .table-wrap{overflow-x:auto;margin:16px 0}
+  table{width:100%;border-collapse:collapse;background:var(--bg);border-radius:10px;overflow:hidden;border:1px solid var(--border);font-size:14px}
+  th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+  th{background:var(--primary-light);color:var(--primary-dark);font-weight:600;font-size:13px}
+  tr:last-child td{border-bottom:none}
+  td strong{color:var(--text)}
+  .text-block{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px 22px;margin:14px 0;font-size:14.5px;line-height:1.75}
+  .text-block strong{color:var(--primary-dark)}
+  .rel{background:var(--accent-light);border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:14px;color:#155e75}
+  .rel strong{color:#0e7490}
+  .links{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px 22px;font-size:14px}
+  .links a{color:var(--primary);text-decoration:none;margin-right:16px;display:inline-block;margin-bottom:6px}.links a:hover{text-decoration:underline}
+  footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--border);text-align:center;color:var(--text-light);font-size:12.5px}
+  @media(max-width:600px){h1{font-size:21px}.container{padding:24px 16px 60px}.text-block,.links{padding:14px 16px}th,td{padding:9px 10px;font-size:13px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="badge">概念关系 · 由 concept-learning-generator 生成</div>
+    <h1>Agent × 上下文 × Skill：三概念关系图</h1>
+    <p class="subtitle">理解智能体、它的"工作记忆"、以及"专家方法"三者如何协作</p>
+  </header>
+
+  <h2 class="section-title">一张图看懂</h2>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 680 360" role="img" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <marker id="arrD" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 2"/>
+        </marker>
+      </defs>
+
+      <!-- 顶部：Agent -->
+      <rect x="260" y="30" width="160" height="68" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.6"/>
+      <text x="340" y="55" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="600" fill="#3C3489">Agent 智能体</text>
+      <text x="340" y="78" text-anchor="middle" dominant-baseline="central" font-size="11.5" fill="#534AB7">感知 → 推理 → 行动 → 观察</text>
+
+      <!-- 左下：Context -->
+      <rect x="40" y="220" width="180" height="68" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.6"/>
+      <text x="130" y="245" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="600" fill="#085041">上下文 Context</text>
+      <text x="130" y="268" text-anchor="middle" dominant-baseline="central" font-size="11.5" fill="#0F6E56">系统提示 + 对话 + 工具结果 + RAG</text>
+
+      <!-- 右下：Skill -->
+      <rect x="460" y="220" width="180" height="68" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.6"/>
+      <text x="550" y="245" text-anchor="middle" dominant-baseline="central" font-size="15" font-weight="600" fill="#0C447C">Skill 技能</text>
+      <text x="550" y="268" text-anchor="middle" dominant-baseline="central" font-size="11.5" fill="#185FA5">可复用的专家方法指令包</text>
+
+      <!-- Context → Agent -->
+      <path d="M 165 220 L 290 105" fill="none" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="195" y="158" font-size="12" fill="#085041" transform="rotate(-28 195 158)">① 提供信息与约束</text>
+
+      <!-- Skill → Agent -->
+      <path d="M 515 220 L 390 105" fill="none" stroke="#185FA5" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="465" y="158" font-size="12" fill="#0C447C" transform="rotate(28 465 158)">② 指导行动方法</text>
+
+      <!-- Agent → Context (回写，虚线) -->
+      <path d="M 270 98 L 145 215" fill="none" stroke="#534AB7" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arrD)"/>
+      <text x="170" y="170" font-size="11.5" fill="#534AB7" transform="rotate(40 170 170)">③ 写入观察结果</text>
+
+      <!-- Skill ↔ Context (底部) -->
+      <path d="M 230 254 L 450 254" fill="none" stroke="#5F5E5A" stroke-width="1.3" marker-end="url(#arr)"/>
+      <path d="M 450 260 L 230 260" fill="none" stroke="#5F5E5A" stroke-width="1.3" marker-end="url(#arr)"/>
+      <text x="340" y="248" text-anchor="middle" font-size="12" fill="#444441">④ Skill 沉淀</text>
+      <text x="340" y="278" text-anchor="middle" font-size="12" fill="#444441">"上下文使用最佳实践"</text>
+
+      <!-- 编号图例 -->
+      <text x="40" y="340" font-size="11.5" fill="#6b7280">① 上下文喂给 Agent 信息  ② Skill 教 Agent 怎么做  ③ Agent 行动后回写到上下文  ④ Skill 编码"怎么用好上下文"</text>
+    </svg>
+  </div>
+
+  <h2 class="section-title">三概念对比表</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>维度</th><th>Agent 智能体</th><th>上下文 Context</th><th>Skill 技能</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>本质</strong></td>
+          <td>能感知-推理-行动-观察的<strong>大模型应用</strong></td>
+          <td>模型生成时能"看到"的<strong>全部内容</strong>（有窗口上限）</td>
+          <td>给 AI 的<strong>可复用指令包</strong>（不改权重）</td>
+        </tr>
+        <tr>
+          <td><strong>类比</strong></td>
+          <td>一位<strong>会做事的助理</strong></td>
+          <td>助理的<strong>工作台 + 桌面资料</strong></td>
+          <td>助理的<strong>岗位操作手册</strong></td>
+        </tr>
+        <tr>
+          <td><strong>存在形式</strong></td>
+          <td>运行时的<strong>控制循环</strong>（prompt + tools + memory）</td>
+          <td>当前请求的<strong>token 序列</strong></td>
+          <td>仓库中的 <strong>SKILL.md 文件</strong>（可版本化）</td>
+        </tr>
+        <tr>
+          <td><strong>生命周期</strong></td>
+          <td>每个任务/会话一个实例</td>
+          <td>随<strong>请求结束</strong>消失</td>
+          <td><strong>长期存在</strong>，可复用、可迭代</td>
+        </tr>
+        <tr>
+          <td><strong>谁产出/谁消费</strong></td>
+          <td><strong>消费</strong>上下文与 Skill；<strong>产出</strong>行动与新上下文</td>
+          <td>被 Agent <strong>读写</strong>；被 Skill 指导<strong>如何管理</strong></td>
+          <td><strong>指导</strong> Agent；<strong>沉淀</strong>上下文使用模式</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-title">重点关系 1：上下文如何影响 Agent 的工作？</h2>
+  <div class="text-block">
+    上下文是 Agent 的<strong>"工作台面"</strong>，决定了 Agent 在每一步推理中"能看到什么、记住什么、被什么约束"。它对 Agent 的影响体现在四个层面：
+    <br><br>
+    <strong>① 决定 Agent 的"视野"：</strong>上下文窗口外的任何信息，Agent 都"看不见"。所以检索（RAG）、对话历史、工具结果必须<strong>主动塞进上下文</strong>，否则 Agent 就像失忆。
+    <br><br>
+    <strong>② 决定 Agent 的"行为约束"：</strong>系统提示、角色定义、安全规则都在上下文里。改一句系统提示，Agent 的整个行为模式就可能变化。
+    <br><br>
+    <strong>③ 决定 Agent 的"成本与速度"：</strong>上下文越长，<strong>费用越高、延迟越大</strong>。这直接影响 Agent 是否能在生产环境大规模使用。
+    <br><br>
+    <strong>④ 决定 Agent 的"推理质量"：</strong>"Lost in the Middle" 现象说明，<strong>关键信息放对位置</strong>（开头或结尾）比"塞很多信息"更重要。上下文设计本身就是一种工程。
+  </div>
+
+  <h2 class="section-title">重点关系 2：Skill 如何沉淀可复用的任务知识？</h2>
+  <div class="text-block">
+    Skill 是把"散落在各次对话里的经验"<strong>外置化、结构化、可复用化</strong>的机制。它通过三条路径沉淀知识：
+    <br><br>
+    <strong>① 从"反复说的话"到"一次配置"：</strong>以前每次让 AI 写 commit，都要重复"用 Conventional Commits 格式、先跑 lint、跑测试"——现在写进一个 Skill，下次一句话触发。
+    <br><br>
+    <strong>② 从"个人经验"到"团队资产"：</strong>项目级 Skill 放在仓库里，<strong>随代码一起版本化、code review、新成员 onboarding</strong>。一个人的最佳实践变成整个团队的。
+    <br><br>
+    <strong>③ 从"上下文管理"到"上下文方法论"：</strong>Skill 里可以沉淀"该怎么组织上下文"（例如"关键约束放系统提示"、"长文档用 RAG 检索而不是全塞"）。Skill 不仅教做事，还<strong>教"怎么用好上下文"</strong>——这就是图中关系 ④ 的含义。
+  </div>
+
+  <h2 class="section-title">三句话总结</h2>
+  <div class="rel"><strong>Agent</strong> 是一位会做事的助理；</div>
+  <div class="rel"><strong>上下文</strong> 是助理眼前的桌面和桌上的资料；</div>
+  <div class="rel"><strong>Skill</strong> 是公司给助理配的岗位手册——把"经验"沉淀成"方法"，让这位助理在每个新任务上都能立刻按专家方式工作。</div>
+
+  <h2 class="section-title">相关学习资料</h2>
+  <div class="links">
+    <a href="agent.html">→ Agent 核心要点</a>
+    <a href="llm-context.html">→ 大模型的上下文 核心要点</a>
+    <a href="skill.html">→ Skill（AI 技能）核心要点</a>
+  </div>
+
+  <footer>由 concept-learning-generator 生成 · 概念关系与三份学习资料术语保持一致</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill（AI 技能）核心要点 · 1 分钟速成</title>
+<style>
+  :root{--primary:#4f46e5;--primary-dark:#3730a3;--primary-light:#eef2ff;--accent:#0891b2;--accent-light:#ecfeff;--text:#1f2937;--text-light:#6b7280;--bg:#fff;--bg-soft:#f9fafb;--border:#e5e7eb}
+  *{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg-soft);line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+  .container{max-width:780px;margin:0 auto;padding:40px 24px 80px}
+  header{text-align:center;margin-bottom:32px}.badge{display:inline-block;background:var(--primary-light);color:var(--primary);font-size:12px;font-weight:600;padding:4px 12px;border-radius:999px;margin-bottom:14px;letter-spacing:.3px}
+  h1{font-size:28px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px}.subtitle{color:var(--text-light);font-size:14.5px}
+  .definition{background:linear-gradient(135deg,var(--primary) 0%,#6366f1 100%);color:#fff;padding:20px 24px;border-radius:12px;margin-bottom:36px;font-size:16px;line-height:1.7;box-shadow:0 4px 14px rgba(79,70,229,.2)}
+  .definition strong{font-weight:600}
+  .section-title{font-size:18px;font-weight:600;margin:36px 0 16px;display:flex;align-items:center;gap:10px}.section-title::before{content:"";width:4px;height:18px;background:var(--primary);border-radius:2px}
+  .points{display:grid;gap:12px}.point{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px 20px}
+  .point-title{font-size:15.5px;font-weight:600;margin-bottom:6px}.point-body{color:var(--text-light);font-size:14px;line-height:1.7}.point-body strong{color:var(--text);font-weight:600}
+  .scenario{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px 22px;font-size:14.5px;line-height:1.75}.scenario strong{color:var(--primary-dark)}
+  .scenario ol{margin:8px 0 0 22px;color:var(--text-light)}.scenario ol li{margin-bottom:4px}
+  .boundary{background:var(--bg);border-left:3px solid #f59e0b;padding:12px 16px;border-radius:6px;margin-bottom:10px;font-size:14px;color:var(--text)}.boundary strong{color:#b45309}
+  .sources{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px 22px;font-size:14px}.sources ol{margin-left:22px;color:var(--text-light)}.sources ol li{margin-bottom:8px;word-break:break-all}.sources a{color:var(--primary);text-decoration:none}.sources a:hover{text-decoration:underline}
+  .quiz{margin-top:8px}.question{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px}.q-text{font-weight:600;font-size:14.5px;margin-bottom:6px}.q-text::before{content:"Q";color:var(--primary);font-weight:700;margin-right:6px}
+  summary{cursor:pointer;color:var(--primary);font-size:13.5px;font-weight:500;display:inline-block;padding:3px 0}summary:hover{text-decoration:underline}summary::-webkit-details-marker{display:none}summary::before{content:"▸ ";font-size:11px}details[open] summary::before{content:"▾ "}
+  .answer{margin-top:8px;padding:10px 14px;background:var(--accent-light);border-left:3px solid var(--accent);border-radius:4px;color:#155e75;font-size:13.5px;line-height:1.7}.answer strong{color:#0e7490;font-weight:600}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--border);text-align:center;color:var(--text-light);font-size:12.5px}
+  @media(max-width:600px){h1{font-size:22px}.container{padding:24px 16px 60px}.point,.scenario,.sources,.question{padding:14px 16px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="badge">1 分钟学完 · 由 concept-learning-generator 生成</div>
+    <h1>Skill（AI 技能）核心要点</h1>
+    <p class="subtitle">理解给 AI 智能体的"可复用指令包"——让通用模型在特定任务上像专家</p>
+  </header>
+
+  <div class="definition">
+    <strong>一句话定义：</strong>Skill（技能）是给 AI 智能体的<strong>"可复用指令包"</strong>——把某个领域的最佳实践打包成结构化文件，让 AI 遇到相关任务时按<strong>专家方法</strong>执行。它<strong>不是</strong>一次性的提示词（prompt 用完就丢），也<strong>不是</strong>模型微调（<strong>不改模型权重</strong>，外置的知识包），也<strong>不是</strong>工具调用（工具是 Agent 用来"做事"的函数，Skill 是用来"教方法"的指令）。
+  </div>
+
+  <h2 class="section-title">核心机制（6 个组件）</h2>
+  <div class="points">
+    <div class="point"><div class="point-title">1. 触发条件 (Triggers)</div><div class="point-body">定义<strong>什么时候该用这个 Skill</strong>。可以由 AI <strong>自动判断</strong>（根据问题关键词/场景匹配），也可以由<strong>用户手动调用</strong>（明确说"用 XX 技能"或 <code>/skill-name</code>）。</div></div>
+    <div class="point"><div class="point-title">2. 按需加载 (On-demand Loading)</div><div class="point-body">Skill <strong>不被预先塞进主上下文</strong>，而是在需要时由 AI 加载。避免污染主上下文、节省 token，又能按需获得专业知识。</div></div>
+    <div class="point"><div class="point-title">3. 内容结构 (Structure)</div><div class="point-body">通常一个 Skill = 一个文件夹，里面是 <strong>SKILL.md</strong>：<strong>YAML 头</strong>（元数据：name / description / when_to_use）+ <strong>正文</strong>（详细步骤、最佳实践、注意事项）。复杂 Skill 可附带 scripts/、references/ 等。</div></div>
+    <div class="point"><div class="point-title">4. 层级与作用域 (Scope)</div>
+      <div class="point-body">
+        <strong>用户级</strong>：放在 <code>~/.skills/</code>，个人所有项目通用；<br>
+        <strong>项目级</strong>：放在仓库内 <code>.workbuddy/skills/</code>（或类似路径），<strong>只服务于当前项目/团队</strong>，便于沉淀团队规范。本仓库采用的就是项目级 Skill。
+      </div>
+    </div>
+    <div class="point"><div class="point-title">5. 可组合 (Composable)</div>
+      <div class="point-body">多个 Skill 可<strong>按任务组合使用</strong>。比如"写论文"任务可能同时加载"学术写作规范"+"引用格式"+"降重"等多个 Skill。</div></div>
+    <div class="point"><div class="point-title">6. 可版本化 (Versioned)</div>
+      <div class="point-body">作为文件存放在仓库里，<strong>可以用 Git 跟踪变更、code review、回滚</strong>。这是 Skill 优于一次性提示词的关键。</div></div>
+  </div>
+
+  <h2 class="section-title">一个具体应用场景</h2>
+  <div class="scenario">
+    <strong>场景：团队"提交代码" Skill（项目级）</strong><br>
+    团队希望所有 commit 都符合规范，并自动跑测试。
+    <ol>
+      <li>在仓库 <code>.workbuddy/skills/commit-helper/SKILL.md</code> 中定义：commit message 用 Conventional Commits 格式；提交前必须跑 lint + 单测；CHANGELOG 必须同步更新</li>
+      <li>开发者对 AI 说"提交代码" → AI 加载该 Skill</li>
+      <li>AI 按 Skill 步骤：检查变更 → 生成合规 commit msg → 跑 lint → 跑 test → 检查 CHANGELOG → 提交</li>
+      <li>新成员入职后，<strong>无需口头培训</strong>，只要会用 AI + 这个 Skill，提交就自动规范</li>
+      <li>规范更新时，<strong>改 SKILL.md 一个文件</strong>，所有人下次提交自动用新规范</li>
+    </ol>
+  </div>
+
+  <h2 class="section-title">容易混淆的问题与边界</h2>
+  <div class="boundary"><strong>坑 1：把 Skill 当提示词。</strong>提示词是一次性输入，<strong>用完就丢</strong>；Skill 是<strong>结构化、可复用、可版本化</strong>的资产，应放在仓库里随项目迭代。</div>
+  <div class="boundary"><strong>坑 2：把 Skill 当微调（fine-tuning）。</strong>微调<strong>改变模型权重</strong>，成本高、不可逆；Skill 只是<strong>外置的指令</strong>，不改模型，随时可改可删。</div>
+  <div class="boundary"><strong>坑 3：把 Skill 当工具（tool）。</strong>工具是 Agent 用来"<strong>做事</strong>"的函数（搜网页、跑代码）；Skill 是用来"<strong>教方法</strong>"的指令。两者可以配合：Skill 里指挥 Agent 调哪些工具。</div>
+  <div class="boundary"><strong>边界：</strong>Skill 适合<strong>重复、有标准流程、可沉淀</strong>的任务；不适合一次性探索、低频操作、纯创意发散。判断标准："这件事我或团队<strong>要做 ≥ 3 次且流程固定</strong>"，就值得做 Skill。</div>
+
+  <h2 class="section-title">可核查的资料来源</h2>
+  <div class="sources">
+    <ol>
+      <li>Model Context Protocol（MCP）官方站点 — 智能体工具/资源调用的事实标准 — <a href="https://modelcontextprotocol.io" target="_blank">https://modelcontextprotocol.io</a></li>
+      <li>Anthropic: Building effective agents（构建有效 Agent）— <a href="https://www.anthropic.com/research/building-effective-agents" target="_blank">https://www.anthropic.com/research/building-effective-agents</a></li>
+      <li>ReAct 论文（智能体如何决定调什么工具/用什么方法）— <a href="https://arxiv.org/abs/2210.03629" target="_blank">https://arxiv.org/abs/2210.03629</a></li>
+      <li>OpenAI: A Practical Guide to Building Agents（构建 Agent 实践指南）— <a href="https://platform.openai.com/docs/guides/agents" target="_blank">https://platform.openai.com/docs/guides/agents</a></li>
+    </ol>
+    <p style="margin-top:10px;color:var(--text-light);font-size:12.5px">注：Skill 作为 AI 智能体的"指令包"概念在多个 AI 平台（Anthropic、OpenAI、各类 Agent 框架）有相近实现，但各家命名与开放程度不同；本作业以 WorkBuddy / 项目级 Skill 为具体形态，参考资料选用了与之最相关的智能体工具调用与决策标准。</p>
+  </div>
+
+  <h2 class="section-title">自测题（5 道）</h2>
+  <div class="quiz">
+    <div class="question"><div class="q-text">1. Skill 和一次性提示词（prompt）最本质的区别是什么？</div>
+      <details><summary>看答案</summary><div class="answer">提示词是<strong>单次输入、用完即丢</strong>；Skill 是<strong>结构化、可复用、可版本化（Git 管理）、可共享</strong>的资产。Skill 是把"领域专家方法"沉淀下来，提示词是临时对话。</div></details></div>
+    <div class="question"><div class="q-text">2. Skill 和模型微调（fine-tuning）有什么区别？</div>
+      <details><summary>看答案</summary><div class="answer">微调<strong>改变模型权重</strong>，成本高、需要训练数据、不可逆；Skill <strong>不改模型权重</strong>，只是外置的指令文件，<strong>可随时修改、删除、共享，成本极低</strong>。Skill 是"轻量级的能力外挂"。</div></details></div>
+    <div class="question"><div class="q-text">3. Skill 和 Agent 调用的"工具（tool）"有什么区别？</div>
+      <details><summary>看答案</summary><div class="answer"><strong>工具是"做事"的函数</strong>（搜网页、跑代码、读写文件，由系统执行）；<strong>Skill 是"教方法"的指令</strong>（告诉 AI 该怎么想、按什么流程做、什么时候调哪些工具）。Skill 指导 Agent 调工具。</div></details></div>
+    <div class="question"><div class="q-text">4. 用户级 Skill 和项目级 Skill 的区别？本仓库用的是哪种？</div>
+      <details><summary>看答案</summary><div class="answer">用户级放 <code>~/.skills/</code>，个人所有项目通用；项目级放仓库内 <code>.workbuddy/skills/</code>，<strong>只服务于当前项目/团队</strong>，便于沉淀团队规范。本仓库 <code>concept-learning-generator</code> 是<strong>项目级 Skill</strong>。</div></details></div>
+    <div class="question"><div class="q-text">5. 什么时候<strong>值得</strong>造一个 Skill？</div>
+      <details><summary>看答案</summary><div class="answer">判断标准：这件事<strong>要做 ≥ 3 次、流程固定、有最佳实践可总结</strong>。满足这三条，做成 Skill 就能省下大量重复指导 AI 的时间，且规范可沉淀、可传承。一次性探索或纯创意任务<strong>不值得</strong>做成 Skill。</div></details></div>
+  </div>
+
+  <footer>由 concept-learning-generator 生成 · 资料来源已在生成时人工核查可访问 · 内容已用第一人称视角重述</footer>
+</div>
+</body>
+</html>
