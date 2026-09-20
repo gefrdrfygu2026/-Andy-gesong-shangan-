@@ -117,3 +117,27 @@
 ---
 
 **仓库维护**：gefrdrfygu2026 · 邮箱 gsdx41032@qq.com
+
+## 0917 课堂作业（大数据与人工智能 · 课程 9）
+
+> 完成日期：2026-09-20 · 对应课堂要点：0917课堂要点
+
+| 作业项 | 文件 | 状态 |
+|--------|------|------|
+| ① 创建 .py 文件并运行 | `scripts/01.py` | ✅ 已运行成功（输出"我会成功拿到offer!"） |
+| ② 创建 .ipynb 文件并运行 | `scripts/01.ipynb` | ✅ 已运行成功（输出 `hidd`、`hi`） |
+| ③ 提交到 GitHub 远程仓库 | 本仓库 main 分支 | ✅ 已推送 |
+
+### 课堂要点完成情况
+
+1. 安装 vscode、python、git ✅
+2. 设置 pip 为国内源（清华源）✅
+3. 设置 vscode 为中文界面 ✅
+4. 设置 vscode 为自动保存 ✅
+
+### 运行方式
+
+```bash
+python scripts/01.py        # 运行 Python 脚本
+# scripts/01.ipynb 在 VS Code 中用 Jupyter 打开逐格运行
+```
